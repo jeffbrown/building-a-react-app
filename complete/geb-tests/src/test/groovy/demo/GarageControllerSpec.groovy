@@ -1,6 +1,6 @@
 package demo
 
-import geb.Page
+import demo.pages.GarageHomePage
 import geb.spock.GebSpec
 
 class GarageControllerSpec extends GebSpec {
@@ -13,18 +13,5 @@ class GarageControllerSpec extends GebSpec {
         then:
         at GarageHomePage
         numberOfCarRows == 3
-    }
-}
-
-class GarageHomePage extends Page {
-    static url = '/garage/index'
-
-    static at = {
-        title == 'Garage'
-    }
-
-    static content = {
-        carRows(wait: true) { $('table tbody tr') }
-        numberOfCarRows { carRows.size() }
     }
 }
