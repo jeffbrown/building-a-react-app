@@ -11,6 +11,24 @@ class GarageHomePage extends Page {
 
     static content = {
         carRows(wait: true) { $('table tbody tr') }
-        numberOfCarRows { carRows.size() }
+        numberOfCars { carRows.size() }
+
+        nameField { $('input', name: 'name') }
+        makeList { $('select', name: 'make') }
+        modelList { $('select', name: 'model') }
+        driverList  { $('select', name: 'driver') }
+
+        saveButton { $('input', value: 'Add to library') }
+    }
+
+    void createCar(String name,
+                   String make,
+                   String model,
+                   String driverName) {
+        nameField << name
+        makeList << make
+        modelList << model
+        driverList << driverName
+        saveButton.click()
     }
 }
