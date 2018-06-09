@@ -24,7 +24,7 @@ class GarageHomePage extends Page {
     }
 
     static content = {
-        carRows { $('table tbody tr') }
+        carRows(wait: true) { $('table tbody tr') }
         numberOfCarRows { carRows.size() }
     }
 }
