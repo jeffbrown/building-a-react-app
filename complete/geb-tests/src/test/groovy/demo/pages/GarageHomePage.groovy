@@ -1,5 +1,8 @@
 package demo.pages
 
+import demo.Car
+import demo.modules.CarRowModule
+import demo.modules.CreateCarModule
 import geb.Page
 
 class GarageHomePage extends Page {
@@ -10,25 +13,12 @@ class GarageHomePage extends Page {
     }
 
     static content = {
-        carRows(wait: true) { $('table tbody tr') }
-        numberOfCars { carRows.size() }
 
-        nameField { $('input', name: 'name') }
-        makeList { $('select', name: 'make') }
-        modelList { $('select', name: 'model') }
-        driverList  { $('select', name: 'driver') }
-
-        saveButton { $('input', value: 'Add to library') }
+        carRows(wait: true) { $('table tbody tr').moduleList(CarRowModule) }
+        createForm { $('form', 0).module(CreateCarModule) }
     }
 
-    void createCar(String name,
-                   String make,
-                   String model,
-                   String driverName) {
-        nameField << name
-        makeList << make
-        modelList << model
-        driverList << driverName
-        saveButton.click()
+    List<Car> cars() {
+        carRows.collect { it.toCar() }
     }
 }
