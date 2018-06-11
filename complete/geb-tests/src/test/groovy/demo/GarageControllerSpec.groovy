@@ -7,29 +7,25 @@ import spock.lang.Stepwise
 @Stepwise
 class GarageControllerSpec extends GebSpec {
 
-    void 'test home page'() {
+    void 'Creating a car increaeses the car count'() {
         when:
-        to GarageHomePage
+        GarageHomePage page = browser.to(GarageHomePage)
 
         then:
-        at GarageHomePage
-        numberOfCars == 3
-    }
-
-    void 'test creating a car'() {
-        when:
-        to GarageHomePage
-
-        then:
-        at GarageHomePage
+        browser.at GarageHomePage
 
         when:
-        createCar 'New Car', 'Ford', 'Windstar', 'Susan'
+        Car car = Car.builder()
+                .name('New Car')
+                .make('Ford')
+                .model('Windstar')
+                .driver('Susan').build()
+        page.createForm.createCar(car)
 
         then:
-        at GarageHomePage
         waitFor {
-            numberOfCars == 4
+            page.cars().size() == old(page.cars().size()) + 1
+            page.cars().contains(car)
         }
     }
 }
